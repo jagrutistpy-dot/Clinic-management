@@ -39,11 +39,12 @@ export async function initPatientController() {
 
   document.getElementById("updatePatientBtn").onclick = async () => {
     await updatePatient(window.editingPatientId, {
-      name: document.getElementById("name").value,
-      age: age.value,
-      gender: gender.value,
-      contact: contact.value
-    });
+  name: document.getElementById("name").value,
+  age: document.getElementById("age").value,
+  gender: document.getElementById("gender").value,
+  contact: document.getElementById("contact").value
+});
+
     location.reload();
   };
 }
