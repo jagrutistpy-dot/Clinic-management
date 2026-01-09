@@ -1,40 +1,49 @@
-import { addPatient, getPatients } from "../services/patientService.js";
-import { $ } from "../utils/dom.js";
+import { getPatients, addPatient, deletePatient, updatePatient } from "../services/patientService.js";
+import { PatientTable } from "../components/PatientTable.js";
 
-export function initPatientController() {
-  const form = $("patient-form");
-  const btn = $("add-patient-btn");
+export async function initPatientController() {
+  const app = document.getElementById("app");
 
-  if (!btn) return;
-
-  btn.addEventListener("click", async () => {
-    const data = {
-      name: $("patient-name").value,
-      age: $("patient-age").value,
-      gender: $("patient-gender").value,
-      contact: $("patient-contact").value
-    };
-
-    await addPatient(data);
-    loadPatients();
-  });
-
-  loadPatients();
-}
-
-async function loadPatients() {
   const patients = await getPatients();
-  const tbody = $("patient-table-body");
-  tbody.innerHTML = "";
 
-  patients.forEach(p => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${p.name}</td>
-        <td>${p.age}</td>
-        <td>${p.gender}</td>
-        <td>${p.contact}</td>
-      </tr>
-    `;
-  });
+  app.innerHTML = `
+    <div class="card">
+      <h2>Patients</h2>
+
+      <div class="form-group">
+        <input id="name" placeholder="Name" />
+        <input id="age" placeholder="Age" />
+        <input id="gender" placeholder="Gender" />
+        <input id="contact" placeholder="Contact" />
+
+        <button id="addPatientBtn">Add Patient</button>
+        <button id="updatePatientBtn" style="display:none;">Update Patient</button>
+      </div>
+
+      <div id="patient-table">
+        ${PatientTable(patients)}
+      </div>
+    </div>
+  `;
+
+  document.getElementById("addPatientBtn").onclick = async () => {
+    await addPatient({
+  name: document.getElementById("name").value,
+  age: document.getElementById("age").value,
+  gender: document.getElementById("gender").value,
+  contact: document.getElementById("contact").value
+});
+
+    location.reload();
+  };
+
+  document.getElementById("updatePatientBtn").onclick = async () => {
+    await updatePatient(window.editingPatientId, {
+      name: document.getElementById("name").value,
+      age: age.value,
+      gender: gender.value,
+      contact: contact.value
+    });
+    location.reload();
+  };
 }

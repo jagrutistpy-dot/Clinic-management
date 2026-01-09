@@ -8,10 +8,12 @@ export async function initBillingController() {
   // Load patients
   const patients = await getPatients();
   patientSelect.innerHTML = "";
+
   patients.forEach(p => {
-    patientSelect.innerHTML += `
-      <option value="${p.id}">${p.name}</option>
-    `;
+    const option = document.createElement("option");
+    option.value = p.id;
+    option.textContent = p.name;
+    patientSelect.appendChild(option);
   });
 
   // Add bill

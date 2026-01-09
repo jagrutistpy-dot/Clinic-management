@@ -1,16 +1,32 @@
-export async function initHomeController() {
-  const patients = await fetch("/api/patients").then(r => r.json());
-  const bills = await fetch("/api/billing").then(r => r.json());
+import { getBills } from "../services/billingService.js";
+import { getPatients } from "../services/patientService.js";
 
-  const table = document.getElementById("home-table");
-  table.innerHTML = "";
+export async function initHomeController() {
+  const app = document.getElementById("app");
+
+  const bills = await getBills();
+  const patients = await getPatients();
+
+  let html = `
+    <div class="card">
+      <h2>Patient Billing Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Age</th>
+            <th>Total Bill</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
 
   patients.forEach(p => {
     const total = bills
       .filter(b => b.patient_id == p.id)
       .reduce((sum, b) => sum + Number(b.amount), 0);
 
-    table.innerHTML += `
+    html += `
       <tr>
         <td>${p.name}</td>
         <td>${p.age}</td>
@@ -18,4 +34,12 @@ export async function initHomeController() {
       </tr>
     `;
   });
+
+  html += `
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  app.innerHTML = html;
 }
