@@ -14,6 +14,7 @@ export function DoctorTable(doctors) {
             <td>${d.name}</td>
             <td>${d.specialization}</td>
             <td>${d.schedule}</td>
+            <td>${d.Contact}</td>
             <td>
               <button onclick="removeDoctor(${d.id})">Delete</button>
             </td>

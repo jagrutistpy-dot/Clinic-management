@@ -1,13 +1,22 @@
 const BASE = "/api/doctors";
 
 export async function getDoctors() {
-  return fetch(BASE).then(r => r.json());
+  const res = await fetch(BASE);
+  return res.json();
 }
 
 export async function createDoctor(data) {
-  return fetch(BASE, {
+  const res = await fetch(BASE, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
-  }).then(r => r.json());
+  });
+  return res.json();
+}
+
+export async function deleteDoctor(id) {
+  const res = await fetch(`${BASE}/${id}`, {
+    method: "DELETE"
+  });
+  return res.json();
 }

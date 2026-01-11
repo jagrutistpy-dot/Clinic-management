@@ -1,4 +1,16 @@
 <div class="card">
+  <h3>Add Doctor</h3>
+
+<form id="doctorForm">
+  <input type="text" id="name" placeholder="Doctor Name" required />
+  <input type="text" id="specialization" placeholder="Specialization" required />
+  <input type="text" id="schedule" placeholder="Schedule" required />
+  <input type="text" id="contact" placeholder="Contact" required />
+  <button type="submit">Add Doctor</button>
+</form>
+
+<hr />
+
   <h2>Doctors</h2>
   <table>
     <thead>
@@ -7,6 +19,7 @@
         <th>Specialization</th>
         <th>Schedule</th>
         <th>Contact</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody id="doctor-table"></tbody>

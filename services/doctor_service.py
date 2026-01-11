@@ -1,22 +1,18 @@
 from database.doctor_queries import (
-    db_get_all
-    , db_get_one
-    , db_create
-    , db_update
-    , db_delete
+    insert_doctor,
+    get_all_doctors,
+    update_doctor,
+    delete_doctor_by_id
 )
 
-def service_get_all():
-    return db_get_all()
+def add_doctor(data):
+    return insert_doctor(data)
 
-def service_get_one(doctor_id):
-    return db_get_one(doctor_id)
+def get_doctors():
+    return get_all_doctors()
 
-def service_create(data):
-    return db_create(data)
+def edit_doctor(doctor_id, data):
+    return update_doctor(doctor_id, data)
 
-def service_update(doctor_id, data):
-    return db_update(doctor_id, data)
-
-def service_delete(doctor_id):
-    return db_delete(doctor_id)
+def remove_doctor(doctor_id):
+    return delete_doctor_by_id(doctor_id)
