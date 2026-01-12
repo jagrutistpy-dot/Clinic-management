@@ -1,32 +1,35 @@
-import json
 from core.responses import send_json, send_404
 from core.request import parse_json_body
 from services.doctor_service import (
-    service_get_all
-    , service_get_one
-    , service_create
-    , service_update
-    , service_delete
+    get_doctors,
+    get_doctor,
+    create_doctor,
+    update_doctor,
+    delete_doctor
 )
 
+
 def get_all_doctors(handler):
-    return send_json(handler, 200, service_get_all())
+    return send_json(handler, 200, get_doctors())
 
 
-def get_doctor(handler, doctor_id):
-    doctor = service_get_one(doctor_id)
+def get_single_doctor(handler, doctor_id):
+    doctor = get_doctor(doctor_id)
     return send_json(handler, 200, doctor) if doctor else send_404(handler)
 
-def create_doctor(handler):
+
+def create_new_doctor(handler):
     data = parse_json_body(handler)
-    new_doctor = service_create(data)
+    new_doctor = create_doctor(data)
     return send_json(handler, 201, new_doctor)
 
-def update_doctor(handler, doctor_id):
+
+def update_existing_doctor(handler, doctor_id):
     data = parse_json_body(handler)
-    updated = service_update(doctor_id, data)
+    updated = update_doctor(doctor_id, data)
     return send_json(handler, 200, updated) if updated else send_404(handler)
 
-def delete_doctor(handler, doctor_id):
-    deleted = service_delete(doctor_id)
+
+def delete_existing_doctor(handler, doctor_id):
+    deleted = delete_doctor(doctor_id)
     return send_json(handler, 200, {"deleted": True}) if deleted else send_404(handler)
